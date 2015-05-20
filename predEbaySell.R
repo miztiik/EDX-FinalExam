@@ -64,3 +64,21 @@ perfROCR = performance(predROCR, "tpr", "fpr")
 
 # Plot ROC curve with colors & threshold labels
 plot(perfROCR, colorize=TRUE, print.cutoffs.at=seq(0,1,by=0.1), text.adj=c(-0.2,1.7))
+
+#Lets train the CART model using caret function for the best cp parameter, 10 fold cross validation
+require("rpart")
+require("rpart.plot")
+require("caret")
+require("e1071")
+
+rpartControl = trainControl( method ="cv" , number = 10)
+rpartGrid = expand.grid( .cp = seq(0.01,0.5,0.01))
+
+print("= 10 Fold Cross Validation begins")
+tr = train(sold ~ biddable + startprice + condition + heel + style + color + material , data = dfTrain, method = "rpart", trControl = rpartControl, tuneGrid = rpartGrid)
+
+print("= 10 Fold Cross Validation ends & plotting the best model")
+
+prp(tr$finalModel)
+
+
