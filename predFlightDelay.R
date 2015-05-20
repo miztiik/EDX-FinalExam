@@ -97,8 +97,7 @@ prp(treeModel)
 treePred = predict(treeModel, newdata = df1Test, type = "class")
 
 #Confusion Matrix for CART
-tab = table(df1Test$DelayClass,treePred)
-print(tab)
+table(df1Test$DelayClass,treePred)
 
 require("caret")
 confusionMatrix(treePred, df1Test$DelayClass)
