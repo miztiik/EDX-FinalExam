@@ -8,6 +8,7 @@
 
 ## Cleaning up the environment variables
 rm(list = ls(all = TRUE))
+gc()
 
 readData <- function() {
   require("readr")
@@ -69,3 +70,16 @@ max(table(KMC$cluster))
 #Lets split the clusters
 splKMC = split(df1Norm,KMC$cluster)
 #str(splKMC[[1]])
+
+#Listing the cluster centroids/means to understand hwo they are grouped
+KMC$centers
+
+#setting higher clusternumber
+set.seed(8000)
+k1 = 20
+KMC1 = kmeans(df1Norm, centers = k1 , iter.max=1000)
+str(KMC1)
+table(KMC1$cluster)
+
+#Use the centroids value & the mean from(summary function) to decide what each cluster group represents.
+# You can also use the tapply function, i haven't really figured out how!!! :)
