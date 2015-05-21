@@ -3,7 +3,6 @@
 ## Hubway - Bicycle Renting company rents out its bike for a membership fee. Unlimited number of fides less 30 minutes are free.
 ## Longer rides will cost a "overtime" fees.
 
-
 ## GitHub : https://github.com/miztiik/EDX-FinalExam
 ## 21May2015
 
@@ -17,10 +16,7 @@ readData <- function() {
   print("## Begin importing & preparing the data ##")
   ## Importing & Preparing the data ( using readr package faster than read.csv)
   df = read_csv("./input/FinalExam_HubwayTrips.csv")
-
   df1 = df
-
-  ## Removing columns which are not necessary for the predictions
 
   ##Changing the Character columns into Factors
   df$Morning = as.factor(df$Morning)
@@ -61,3 +57,15 @@ max(df1Norm$Duration)
 
 #Since Hierachial wont work, lets start building K-Means Cluster
 set.seed(5000)
+## Number of clusters (k)
+k = 10
+KMC = kmeans(df1Norm, centers = k , iter.max=1000)
+str(KMC)
+
+#Min & Max observations in a cluster
+min(table(KMC$cluster))
+max(table(KMC$cluster))
+
+#Lets split the clusters
+splKMC = split(df1Norm,KMC$cluster)
+#str(splKMC[[1]])
