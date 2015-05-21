@@ -72,9 +72,10 @@ require("caret")
 require("e1071")
 
 rpartControl = trainControl( method ="cv" , number = 10)
-rpartGrid = expand.grid( .cp = seq(0.001,0.05,0.00098))
+rpartGrid = expand.grid( .cp = seq(0.001,0.05,length=50))
 
-print("= 10 Fold Cross Validation begins")
+print("### 10 Fold Cross Validation begins ###")
+
 tr = train(sold ~ biddable + startprice + condition + heel + style + color + material , data = dfTrain, method = "rpart", trControl = rpartControl, tuneGrid = rpartGrid)
 
 print("### 10 Fold Cross Validation ends & plotting the best model ###")
